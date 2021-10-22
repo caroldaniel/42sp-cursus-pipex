@@ -50,7 +50,7 @@ Header files
 - [`pipex.h`](include/pipex.h)
 
 Main file	
-- [`main.c`](srcs/pipex.c)
+- [`pipex.c`](srcs/pipex.c)
 
 Utilities
 - [`pipex_utils1.c`](srcs/pipex_utils1.c)
