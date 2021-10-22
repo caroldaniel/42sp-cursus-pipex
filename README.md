@@ -65,7 +65,7 @@ Usage
 </h2>
 
 ### Requirements
-`fdf` requires a *gcc* compiler, MinilibX, X-Window and some standard libraries. At the moment, this particular project runs only on Ubuntu systems. 
+`pipex` requires a *clang* compiler and some standard libraries. 
 
 ### Instructions
 
