@@ -6,14 +6,14 @@
 /*   By: cado-car <cado-car@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/18 16:21:29 by cado-car          #+#    #+#             */
-/*   Updated: 2021/10/21 18:22:13 by cado-car         ###   ########.fr       */
+/*   Updated: 2021/10/22 14:37:34 by cado-car         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PIPEX_H
 # define PIPEX_H
 
-# include "libft/libft.h"
+# include "../libft/libft.h"
 
 # include <unistd.h>
 # include <sys/wait.h>
@@ -35,14 +35,24 @@ enum	e_mode
 
 # define ERR_ARG	"Wrong usage. Invalid number of arguments.\n"
 # define ERR_FILE	": invalid file.\n"
+# define ERR_PIPE	"Error on initializing pipe.\n"
+# define ERR_FORK	"Error on forking.\n"
 # define ERR_CMD	": invalid command.\n"
 
+// Functions of pipex main flow
 int		ft_start_files(int argc, char **argv, int *fdin, int *fdout);
-int		open_file(char *file_path, int mode);
-char	*ft_join_path (char *directory, char *command);
-int		ft_strichr(const char *s, int c);
+void	ft_redirect(char *command, char **envp);
+
+// Auxiliary functions
 char	**ft_split_command(char const *s, char c);
-int		ft_here_doc(int *fdin, char **argv, int *i);
-char	*get_command_path(char *command_name, char **envp);
+char	*ft_get_command_path(char *command_name, char **envp);
+char	*ft_join_path(char *directory, char *command);
+int		ft_strichr(const char *s, int c);
+
+// Here_doc function
+int		ft_here_doc(char **argv);
+
+// Error management
+void	error(int exit_code, char *name);
 
 #endif

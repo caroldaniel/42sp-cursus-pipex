@@ -6,14 +6,13 @@
 /*   By: cado-car <cado-car@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/21 14:39:26 by cado-car          #+#    #+#             */
-/*   Updated: 2021/10/21 15:52:54 by cado-car         ###   ########.fr       */
+/*   Updated: 2021/10/22 14:25:16 by cado-car         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "pipex.h"
-#include "libft/libft.h"
+#include "../include/pipex.h"
 static void		ft_createsplit(char **result, char const *s, char c);
-static size_t	ft_addpart(char **result, const char *prev, size_t size, char c);
+static size_t	ft_addpart(char **res, const char *prev, size_t size, char c);
 static size_t	ft_split_command_count(const char *s, char c);
 static int		ft_delimiter_within(const char *s, int pos);
 
@@ -71,7 +70,7 @@ static void	ft_createsplit(char **result, char const *s, char c)
 	result[j] = NULL;
 }
 
-static size_t	ft_addpart(char **result, const char *prev, size_t size, char c)
+static size_t	ft_addpart(char **res, const char *prev, size_t size, char c)
 {
 	if (*prev == c)
 	{
@@ -83,8 +82,8 @@ static size_t	ft_addpart(char **result, const char *prev, size_t size, char c)
 		prev++;
 		size -= 2;
 	}
-	*result = (char *)malloc((size + 1) * sizeof(char));
-	ft_strlcpy(*result, prev, size + 1);
+	*res = (char *)malloc((size + 1) * sizeof(char));
+	ft_strlcpy(*res, prev, size + 1);
 	return (1);
 }
 
@@ -119,7 +118,7 @@ static int	ft_delimiter_within(const char *s, int pos)
 {
 	int		i;
 	int		before;
-	int 	after;
+	int		after;
 
 	i = 0;
 	before = -1;

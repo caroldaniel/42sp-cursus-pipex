@@ -6,20 +6,33 @@
 /*   By: cado-car <cado-car@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/20 21:56:30 by cado-car          #+#    #+#             */
-/*   Updated: 2021/10/21 18:46:47 by cado-car         ###   ########.fr       */
+/*   Updated: 2021/10/22 14:36:39 by cado-car         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "pipex.h"
+#include "../include/pipex.h"
+static void	ft_write_to_pipe(int *fd, char **argv);
 
-char	*get_command_path(char *command_name, char **envp)
+/*	ft_get_command_path()
+**	DESCRIPTION
+**	Iterates over environment variables to find "PATH=" list, and then iterates
+**	over all paths to find the correct executable directory.
+**	PARAMETERS
+**	#1. The command desired.
+**	#2. The environment variables list.
+**	RETURN VALUES
+**	The correct directory for the executable already concatenated with command. 
+**	The command name only if the search fails.
+*/
+
+char	*ft_get_command_path(char *command_name, char **envp)
 {
 	char	*path;
 	char	*directory;
 	char	*bin;
 	int		i;
-	
-	i = 0;	
+
+	i = 0;
 	while (envp[i] && ft_strncmp(envp[i], "PATH=", 5))
 		i++;
 	if (!envp[i])
@@ -108,36 +121,57 @@ int	ft_strichr(const char *s, int c)
 /*	ft_here_doc()
 **	DESCRIPTION
 **	The ft_here_doc() function deals with the heredoc case on the pipex 
-**	executable. It opens the possibility to get data from the user to send it
-**	to a temporary fd for further treatment.
+**	executable. It creates a pipe and takes all text from STDIN until a limiter
+**	is written. 
 **	PARAMETERS
-**	#1. The file descriptors for input and output.
-**	#2. The argument count.
-**	#3. The argument list.
-**	#4. The current index position on argument list.
+**	#1. The argument list.
 **	RETURN VALUES
-**	--
+**	The file descriptor for STDIN upon completion.
 */
 
-int	ft_here_doc(int *fdin, char **argv, int *i)
+int	ft_here_doc(char **argv)
+{
+	int	fd[2];
+	int	pid;
+
+	if (pipe(fd) == -1)
+		error(3, NULL);
+	pid = fork();
+	if (pid == -1)
+		error(4, NULL);
+	if (pid)
+	{
+		waitpid(pid, NULL, 0);
+		close(fd[1]);
+		dup2(fd[0], 0);
+		close(fd[0]);
+	}
+	else
+	{
+		close(fd[0]);
+		ft_write_to_pipe(&fd[1], argv);
+	}
+	return (STDIN);
+}
+
+static void	ft_write_to_pipe(int *fd, char **argv)
 {
 	char	*line;
 	char	*limiter;
 
-	*fdin = open_file(argv[(*i)++], OUTWRITE);
-	limiter = ft_strdup(argv[(*i)++]);
+	limiter = argv[2];
+	write(STDIN, "pipex: here_doc> ", 17);
 	line = get_next_line(STDIN);
 	while (line)
 	{
 		if (!ft_strncmp(limiter, line, ft_strlen(limiter)))
 			break ;
-		write(*fdin, line, ft_strlen(line));
+		write(*fd, line, ft_strlen(line));
 		free(line);
+		write(STDIN, "pipex: here_doc> ", 17);
 		line = get_next_line(STDIN);
 	}
 	free(line);
-	free(limiter);
-	close(*fdin);
-	*fdin = open_file("here_doc", IN);
-	return (*fdin);
+	close(*fd);
+	exit(6);
 }
