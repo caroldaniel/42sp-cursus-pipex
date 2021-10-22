@@ -6,7 +6,7 @@
 /*   By: cado-car <cado-car@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/18 16:21:26 by cado-car          #+#    #+#             */
-/*   Updated: 2021/10/22 14:37:09 by cado-car         ###   ########.fr       */
+/*   Updated: 2021/10/22 15:57:40 by cado-car         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ static void	ft_execute(char *command, char **envp);
 **	./pipex file1 cmd1 cmd2 [cmd3 ... cmdN] file2
 **	# < file1 cmd1 | cmd2 [ | cmd3 | ... | cmdN ] > file2
 **	./pipex here_doc LIMITER cmd1 cmd2 [cmd3 ... cmdN] file 2
-**	# << here_doc LIMITER cmd1 | cmd2 [ | cmd3 | ... | cmdN ] >> file2
+**	# cmd1 << LIMITER | cmd2 [ | cmd3 | ... | cmdN ] >> file2
 */
 
 int	main(int argc, char **argv, char **envp)
