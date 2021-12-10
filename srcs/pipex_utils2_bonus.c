@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "../include/pipex.h"
+
 static void	ft_write_to_pipe(int *fd, char **argv);
 
 /*	ft_get_command_path()

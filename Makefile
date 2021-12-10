@@ -88,7 +88,7 @@ rebonus: 		fclean bonus
 clean:
 				@printf "\n$(YE)Cleaning all object files from libft...$(RC)\n"
 				@make clean -C $(LFT_PATH)
-				@printf "$(GR)Libft objects removed!$(RC)\n\n"
+				@printf "$(RE)Libft objects removed!$(RC)\n\n"
 				$(RM) $(OBJ) $(OBJDIR)
 				$(RM) $(OBJ_BONUS) $(OBJDIR_BONUS)
 				@printf "$(RE)Pipex objects removed!$(RC)\n\n"

@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "../include/pipex.h"
+
 static int	ft_open_file(char *file_path, int mode);
 static void	ft_execute(char *command, char **envp);
 

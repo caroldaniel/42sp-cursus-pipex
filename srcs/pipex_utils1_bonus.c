@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "../include/pipex.h"
+
 static void		ft_createsplit(char **result, char const *s, char c);
 static size_t	ft_addpart(char **res, const char *prev, size_t size, char c);
 static size_t	ft_split_command_count(const char *s, char c);
